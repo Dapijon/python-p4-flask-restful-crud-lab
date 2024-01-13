@@ -69,6 +69,23 @@ class PlantByID(Resource):
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+def delete(self, id):
+        try:
+            plant = Plant.query.get(id)
+            if not plant:
+                return jsonify({"error": "Plant not found"}), 404
+
+            # Delete plant
+            db.session.delete(plant)
+            db.session.commit()
+
+            return '', 204
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+
+api.add_resource(PlantByID, '/plants/<int:id>')
 
 
 
